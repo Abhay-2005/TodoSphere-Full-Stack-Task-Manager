@@ -1,5 +1,6 @@
 // API Configuration
-const API_URL = 'http://localhost:5000/api';
+// const API_BASE = "https://todosphere-knws.onrender.com";
+const API_BASE = window.location.origin;
 let currentUser = null;
 let authToken = null;
 

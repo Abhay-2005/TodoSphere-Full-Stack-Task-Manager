@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require("path");
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
@@ -333,6 +334,13 @@ app.get('/api/health', (req, res) => {
         message: 'Server is running',
         timestamp: new Date()
     });
+});
+
+// Serve Frontend
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // Start Server
