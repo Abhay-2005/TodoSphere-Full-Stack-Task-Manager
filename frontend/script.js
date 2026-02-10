@@ -398,3 +398,36 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+// ================= PROFILE FUNCTIONS =================
+
+// Open Profile Modal
+async function openProfile() {
+    try {
+        const res = await fetch(`${API_URL}/auth/profile`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            document.getElementById("pUsername").textContent = data.user.username;
+            document.getElementById("pEmail").textContent = data.user.email;
+
+            document.getElementById("profileModal").style.display = "flex";
+        } else {
+            showAlert("Failed to load profile", "error");
+        }
+
+    } catch (err) {
+        console.error("Profile error:", err);
+        showAlert("Error loading profile", "error");
+    }
+}
+
+// Close Profile Modal
+function closeProfile() {
+    document.getElementById("profileModal").style.display = "none";
+}
+
