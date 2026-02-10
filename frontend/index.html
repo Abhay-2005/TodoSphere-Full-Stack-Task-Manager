@@ -6,239 +6,142 @@
 <title>Todo App</title>
 
 <style>
+/* ================= PREMIUM UI UPGRADE ================= */
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
-background:linear-gradient(135deg,#667eea,#764ba2);
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-.container{
-width:100%;
-max-width:900px;
-}
-
-/* AUTH */
-
-.auth-container{
-background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 20px 60px rgba(0,0,0,.3);
-}
-
-.auth-header{
-text-align:center;
-margin-bottom:25px;
-}
-
-.auth-header h1{
-color:#667eea;
-}
-
-.auth-tabs{
-display:flex;
-gap:10px;
-margin-bottom:20px;
-}
-
-.auth-tab{
-flex:1;
-padding:12px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-weight:600;
-background:#eee;
-}
-
-.auth-tab.active{
-background:#667eea;
-color:white;
-}
-
-.auth-form{display:none;}
-.auth-form.active{display:block;}
-
-.form-group{
-margin-bottom:15px;
-}
-
-.form-group label{
-display:block;
-margin-bottom:5px;
-}
-
-.form-group input{
-width:100%;
-padding:12px;
-border:2px solid #ddd;
-border-radius:10px;
-}
-
-.btn{
-width:100%;
-padding:12px;
-background:#667eea;
-color:white;
-border:none;
-border-radius:10px;
-font-weight:600;
-cursor:pointer;
-}
-
-.btn:hover{
-background:#5568d3;
-}
-
-/* APP */
-
-.app-container{display:none;}
-.app-container.active{display:block;}
-
-.app-header{
-background:white;
-padding:20px;
-border-radius:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-}
-
-.user-info{
-display:flex;
-gap:15px;
-align-items:center;
-}
-
-.user-avatar{
-width:45px;
-height:45px;
-border-radius:50%;
-background:#667eea;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:bold;
-}
-
-.profile-btn{
-background:#4dabf7;
-color:white;
-border:none;
-padding:8px 15px;
-border-radius:8px;
-cursor:pointer;
-}
-
-.logout-btn{
-background:#ff6b6b;
-color:white;
-border:none;
-padding:8px 15px;
-border-radius:8px;
-cursor:pointer;
-}
-
-/* TODO */
-
+/* Glass effect cards */
+.auth-container,
+.app-header,
 .todo-input-container,
-.todo-list-container{
-background:white;
-padding:20px;
-border-radius:20px;
-margin-bottom:20px;
+.todo-list-container {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
-.todo-input-group{
-display:flex;
-gap:10px;
+/* Modern shadow */
+.auth-container,
+.app-header,
+.todo-input-container,
+.todo-list-container {
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-.todo-input-group input{
-flex:1;
-padding:10px;
-border-radius:8px;
-border:2px solid #ddd;
+/* Input animation */
+input {
+  transition: all 0.25s ease;
 }
 
-.add-btn{
-background:#51cf66;
-color:white;
-border:none;
-padding:10px 20px;
-border-radius:8px;
-cursor:pointer;
+input:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
 }
 
-.todo-item{
-background:#f5f5f5;
-padding:12px;
-border-radius:10px;
-margin-bottom:10px;
-display:flex;
-gap:10px;
-align-items:center;
+/* Button glow */
+.btn,
+.add-btn,
+.profile-btn,
+.logout-btn,
+.edit-btn,
+.delete-btn,
+.close-btn {
+  position: relative;
+  overflow: hidden;
 }
 
-/* ALERT */
-
-.alert{
-padding:10px;
-border-radius:8px;
-margin-bottom:10px;
+.btn::after,
+.add-btn::after,
+.profile-btn::after,
+.logout-btn::after,
+.edit-btn::after,
+.delete-btn::after,
+.close-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.4),
+    transparent
+  );
+  transform: translateX(-100%);
 }
 
-.alert-success{
-background:#d3f9d8;
-color:#2b8a3e;
+.btn:hover::after,
+.add-btn:hover::after,
+.profile-btn:hover::after,
+.logout-btn:hover::after,
+.edit-btn:hover::after,
+.delete-btn:hover::after,
+.close-btn:hover::after {
+  animation: shine 0.8s;
 }
 
-.alert-error{
-background:#ffe3e3;
-color:#c92a2a;
+@keyframes shine {
+  to {
+    transform: translateX(100%);
+  }
 }
 
-/* MODAL */
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.5);
-justify-content:center;
-align-items:center;
-z-index:1000;
+/* Todo card animation */
+.todo-item {
+  transition: all 0.25s ease;
 }
 
-.modal-content{
-background:white;
-padding:25px;
-border-radius:15px;
-width:280px;
-text-align:center;
+.todo-item:hover {
+  transform: scale(1.02);
 }
 
-.close-btn{
-margin-top:15px;
-background:#667eea;
-color:white;
-border:none;
-padding:8px 15px;
-border-radius:8px;
-cursor:pointer;
+/* Avatar glow */
+.user-avatar {
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.3);
+}
+
+/* Floating alert */
+.alert {
+  animation: floatIn 0.4s ease;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Profile modal animation */
+.modal-content {
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
 }
 
 </style>
